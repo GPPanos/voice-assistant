@@ -1,0 +1,173 @@
+import speach_recognation as sr
+import os
+import sys
+import readimport webbrowser
+import smtplib
+import requests
+import subprocess
+for pyowm import owm
+import youtube_d1
+import vlc
+import urllib
+import urllib2
+import json
+from bs4 import BEUTIFULSOUP AS SOUP
+from urllib2 import urrlopen
+import wikipedia
+import rndom
+from time import strftime
+def mycommand():
+r=sr.Recognizer()
+with sr.Microphone () as source:
+print ('say sm[omething...')
+r.pause_threshold=1
+
+r.adjust_for_ambient_noise(source,duration=1)
+audio =r.listen(source)
+try:
+command=
+r.recognize_google(audio).lower()
+print('you said: '+command+ '\n')
+#loop back to continue to listen to command if unreconizable speech is recieved exept sr.UnknownValueError:
+        print('....')
+        command=mycommand();
+       return command
+def sofiarespones(audio)
+    print(audio)
+    for line in audio.splitlines():
+       os.system("say" + audio)
+  while true:
+    assistant(mycommand())
+if 'open reddit; in command:
+       reg _ex=re.search('open reddit (.*)', command)
+        url=
+'https://www.reddit.com/'if reg_ex:subreddit=
+reg_ex.group(1)
+       url=url + 'r/'+ subreddit
+webbrowser.open(url)
+sofiaResponse('the Reddit content has been opened for you sir.')
+elif 'open' in commzand:
+reg_ex:
+domain=
+reg_ex.group(1)
+             print(domain)
+             url='https:/www.'+domain
+webbrowser.open(url)
+sofiaResponse('the websiteyou have requested has been opened for you sir.')
+else:
+pass
+elif 'email'in command:
+sofiarespnse(who is the recipient?)
+recipenty=mycommand()
+if 'rajat'in reciepent:
+sofiaResponse('what should I say to him')
+content=my command()
+mail=smtplib.SMTB('smtb.gmail.com', 587)
+                  mail.ehlo()
+                  mail.starttls()
+mail.login('your_email_adress','your_password')
+mail.sendmail('sender_email','reseiver_email',content)
+mail.close()
+sofiarespones('Email has been sent successfully. you can check your inbox.')
+else:
+sofiarespones('Idont\'t know what you mean!)
+elif'launch'in command:
+reg_ex=re.search('launch(,*)'command)
+if reg_ex:
+appname=reg_ex.group(1)
+appname1=appname+".app"
+subprocess.popen(["open", "-n","/Applications/"+appname1],stdout=subprocess.PIPE)
+sofiarespones('I have launched the desired application')
+elif 'current weather'in command:
+reg_ex=re.search('current weather in (.*)',command)
+if reg_ex:
+city=reg_ex.group(1)
+owm=
+OWM(API_Key='ab0d5e80e8dafb2cd81fa9e82431c1fa')
+obs=
+owm.weather_at_place(city)
+w=obs.get_status()
+x=
+w.get_temperature(unit='celsius')
+sofiaresponse('current weather in %s is %s.the maximum tempreture is %0.2f and the minimum tempreture is %0.2f degree celcius'
+%(city,k,x['temp_max'],x['temp_min']))
+elif 'time'in command:
+import datetime
+now=datetime.datetime.now()
+sofiarespones('current time is %d hours %d minutes' %(now.hour,no.minute))
+#Greet sofia
+elif 'hello' in command :
+day_time=
+int(strftime('%H'))
+if day_time<12:
+sofiaResponse('Hello sir.Good morning')
+elif 12<= day_time<18:
+sofiaRespones('Hello sir.Good afternoon')
+else:
+sofiaRespones('Hellosir.Good evenning')
+#to terminate the program
+elif 'shutdown' in command:
+sofiaResponse('Bye bye sir.Have a nice day')
+sys.exit()
+elif 'play me a song' in command:
+path= '/users/nageshsinghchauhan/Documant s/videos/'
+folder=path
+for the_file in os.listdir(folder):
+file_path=
+os.path.join(folder,the_file)
+try:
+os.path.isfile(file_path):
+os.unlink(file_path)
+except Exception as e:
+print(e)
+sofiaResponse('what song shall I play sir?')
+mysong=mycommand()
+if mysong:
+flag=0
+url=
+'https://www.youtube.com/results?
+search query=" +mysong.replace('', '+')
+response=
+urllib2.urlopen(url)
+html=response.read()
+soup1=
+soup(html,"lxml")
+url_list=[]
+for vid in
+soup1,findAll(attrs={'class':'yt-uix-title-link'}):
+if
+('https://www.youtube.com'+vid['href']).startswith("https://www.youtube.com/watch/v="):
+flag=1
+final_url=
+'https://www.youtube.com'+vid['href']
+url_list.append(final_url)
+url = url_list[0]
+ydl_opts={}
+os.chdir(path)
+with
+youtube_dl.youtubeDL(ydl_opts)as ydl:
+ydl.download([url])
+vlc.play(path)
+if flag==0:
+sofiaResponse('I have not found anything in youtube')
+elif 'news for today'in command:
+try:
+news_url="https://news.google.com/news/rss"
+client=urlopen(news_url)
+xml_page=client.read()
+client.close
+soup_page=soup(xml_page,"xml")
+news_list=soup_page.findall("item") for news in news_list[:15]:
+sofiaresponse(news.title.encod e('utf-8'))
+except Exception as e:
+print(e)
+elife 'tell me about'in command:
+reg_ex=re.search('tellme about(,*)',command)
+try:
+if reg_ex:
+topic=
+reg_ex.group(1)
+ny=wikipedia.page(topic)
+sofiaResponse(ny.content[:500].encode('utf-8))
+exept Exception as e:
+sofiaResponse(e)
